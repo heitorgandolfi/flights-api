@@ -14,7 +14,7 @@ async function getPassengers() {
 async function getPassengerById(id: number) {
   const passenger = await db.passenger.findFirstOrThrow({
     where: {
-      id: id,
+      id,
     },
   });
 
@@ -34,7 +34,7 @@ async function createPassenger(data: AddPassengersDto) {
 async function deletePassengerById(id: number) {
   return await db.passenger.delete({
     where: {
-      id: id,
+      id,
     },
   });
 }

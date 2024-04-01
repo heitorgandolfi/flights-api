@@ -15,7 +15,7 @@ async function getFlights() {
 async function getFlightById(id: number) {
   const flight = await db.flight.findUnique({
     where: {
-      id: id,
+      id,
     },
     include: {
       bookings: true,
@@ -39,7 +39,7 @@ async function createFlight(data: AddFlightDTO) {
 async function deleteFlightById(id: number) {
   return await db.flight.delete({
     where: {
-      id: id,
+      id,
     },
   });
 }
