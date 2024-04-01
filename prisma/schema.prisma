@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Flight {
+  id          Int      @id @default(autoincrement())
+  origin      String
+  destination String
+  airline     String
+  price       Float
+  departure   DateTime
+  arrival     DateTime
+
+  bookings Booking[]
+
+  @@map("flights")
+}
+
+model Passenger {
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String
+
+  bookings Booking[]
+
+  @@map("passengers")
+}
+
+model Booking {
+  id          Int       @id @default(autoincrement())
+  passengerId Int
+  flightId    Int
+  seatNumber  String
+  bookingAt   DateTime  @default(now())
+  Flight      Flight    @relation(fields: [flightId], references: [id])
+  Passenger   Passenger @relation(fields: [passengerId], references: [id])
+
+  @@map("bookings")
+}
