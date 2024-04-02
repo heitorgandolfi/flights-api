@@ -35,6 +35,7 @@ export const usersRoutes = (elysia: Elysia) => (
       async (req) => {
         const { email, name, password, role } = req.body;
         await UsersHandler.create({ email, name, password, role });
+        return new Response(null, { status: 201 });
       },
       {
         body: t.Object({

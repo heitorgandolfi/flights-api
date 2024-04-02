@@ -18,6 +18,7 @@ export const bookingsRoutes = (app: Elysia) => (
   app.post("/bookings", async (req) => {
     const data = req.body;
     await BookingsHandler.create(data);
+    return new Response(null, { status: 201 });
   }, {
     body: t.Object({
       flightId: t.Number(),

@@ -26,13 +26,13 @@ new Elysia()
       }
 
       try {
-        const tokenValue = token.split(" ");
+        const tokenValue = token.split(" ")[1];        
 
         if (process.env.JWT_SECRET === undefined) {
           throw new Error("Error on sync enviroment variables");
         }
 
-        const decoded = jwt.verify(tokenValue[1], process.env.JWT_SECRET) as TokenPayload;
+        const decoded = jwt.verify(tokenValue, process.env.JWT_SECRET) as TokenPayload;
 
         if (!decoded) return new Response(null, { status: 401 });
 
