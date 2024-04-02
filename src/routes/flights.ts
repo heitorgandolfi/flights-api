@@ -1,4 +1,6 @@
 import { Elysia, t } from "elysia";
+
+import { UserRole } from "../dtos/users";
 import { FlightsHandler } from "../handler/flights";
 
 export const flightsRoutes = (app: Elysia) => (
@@ -15,26 +17,39 @@ export const flightsRoutes = (app: Elysia) => (
     return flight;
   }),
 
-  app.post(
-    "/flights",
-    async (req) => {
+  app.guard({
+    beforeHandle: ({ headers }) => {
+      const role = headers.role as UserRole | null;
+
+      if (!role) return new Response(null, { status: 401 });
+
+      if (role !== UserRole.ADMIN) {
+        return new Response(null, { status: 403 });
+      }
+
+    }
+  }, app => (
+    app.post("/flights", async (req) => {
       const data = req.body;
       await FlightsHandler.create(data);
+      return new Response(null, { status: 201 });
     },
-    {
-      body: t.Object({
-        origin: t.String(),
-        destination: t.String(),
-        airline: t.String(),
-        price: t.Number(),
-        departure: t.String(),
-        arrival: t.String(),
-      }),
-    }
-  ),
-  
-  app.delete("/flights/:id", async (req) => {
-    const { id } = req.params;
-    await FlightsHandler.deleteById(parseInt(id));
-  })
+      {
+        body: t.Object({
+          origin: t.String(),
+          destination: t.String(),
+          airline: t.String(),
+          price: t.Number(),
+          departure: t.String(),
+          arrival: t.String(),
+        }),
+      }
+
+    ),
+    
+    app.delete("/flights/:id", async (req) => {
+      const { id } = req.params;
+      await FlightsHandler.deleteById(parseInt(id));
+    })
+  ))
 );
