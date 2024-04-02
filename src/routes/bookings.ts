@@ -18,7 +18,7 @@ export const bookingsRoutes = (app: Elysia) =>
     }, {
       body: t.Object({
         flightId: t.Number(),
-        passengerId: t.Number(),
+        userId: t.Number(),
         seatNumber: t.String(),
       })
     }).delete("/bookings/:id", async (req) => {

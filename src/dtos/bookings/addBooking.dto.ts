@@ -1,5 +1,5 @@
 export interface AddBookingDto {
   flightId: number;
-  passengerId: number;
+  userId: number;
   seatNumber: string;
 }

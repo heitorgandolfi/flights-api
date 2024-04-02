@@ -8,8 +8,15 @@ async function getBookings() {
         },
         include: {
             Flight: true,
-            Passenger: true,
-        },
+            User: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    role: true,
+                },
+            },
+        }
     });
 
     return bookings;
@@ -22,7 +29,14 @@ async function getBookingById(id: number) {
         },
         include: {
             Flight: true,
-            Passenger: true,
+            User: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    role: true,
+                },
+            },
         }
     })
 
