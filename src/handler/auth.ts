@@ -7,11 +7,11 @@ import { UsersRepository } from "../repositories/users";
 export async function authenticate({ email, password }: AuthenticateDTO) {
   const user = await UsersRepository.getUserByEmail(email);
 
-  if (!user) return { message: "Invalid email or password" }
+  if (!user) return new Response("Invalid email or password", { status: 401 });
 
   const isPasswordValid = await compare(password, user.password);
 
-  if (!isPasswordValid) return { message: "Invalid email or password" }
+  if (!isPasswordValid) return new Response("Invalid email or password", { status: 401 });
 
   const jwtToken = jwt.sign({ sub: String(user.id), role: user.role }, process.env.JWT_SECRET!, {
     expiresIn: "1h",
