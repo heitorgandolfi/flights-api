@@ -6,7 +6,9 @@
     "dev": "bun --watch src/server.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/jsonwebtoken": "^9.0.6",
+    "jsonwebtoken": "^9.0.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -14,6 +16,8 @@
   "dependencies": {
     "@elysiajs/swagger": "^1.0.3",
     "@prisma/client": "5.11.0",
+    "@types/bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
     "elysia": "^1.0.10",
     "prisma": "^5.11.0"
   }
